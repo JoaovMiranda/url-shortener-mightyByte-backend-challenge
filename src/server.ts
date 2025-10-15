@@ -28,7 +28,6 @@ app.use((req, res, next) => {
 
 app.use('/', router);
 
-// Rota de health check
 app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'OK',

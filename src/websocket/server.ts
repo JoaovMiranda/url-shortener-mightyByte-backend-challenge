@@ -37,7 +37,6 @@ export class ShortUrlWebSocketServer {
       console.log(`Received acknowledgement for delivery: ${data.deliveryId}`);
       this.pendingDeliveries.delete(data.deliveryId);
     } else if (data.type === 'CLIENT_READY') {
-      // Client is ready to receive messages
       console.log('Client is ready to receive messages');
     }
   }
@@ -87,13 +86,11 @@ export class ShortUrlWebSocketServer {
         const timeSinceCreation = now.getTime() - delivery.createdAt.getTime();
 
         if (timeSinceCreation > 30000) {
-          // 30 seconds timeout
           console.log(`Removing expired delivery: ${deliveryId}`);
           this.pendingDeliveries.delete(deliveryId);
           return;
         }
 
-        // Retry every 5 seconds for pending deliveries
         if (timeSinceCreation > delivery.attempts * 5000) {
           delivery.attempts++;
           console.log(
@@ -102,7 +99,7 @@ export class ShortUrlWebSocketServer {
           this.broadcastShortUrl(deliveryId, delivery.shortUrl);
         }
       });
-    }, 5000); // Check every 5 seconds
+    }, 5000);
   }
 
   private generateDeliveryId(): string {

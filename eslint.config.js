@@ -7,15 +7,15 @@ module.exports = [
       globals: {
         console: 'readonly',
         process: 'readonly',
-        module: 'readonly'
-      }
+        module: 'readonly',
+      },
     },
     rules: {
-      'no-console': 'off', 
-      'no-undef': 'off' 
-    }
+      'no-console': 'off',
+      'no-undef': 'off',
+    },
   },
   {
-    ignores: ['node_modules/', 'dist/']
-  }
+    ignores: ['node_modules/', 'dist/'],
+  },
 ];

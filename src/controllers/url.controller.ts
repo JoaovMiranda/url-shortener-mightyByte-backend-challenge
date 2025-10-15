@@ -47,15 +47,12 @@ export const createShortUrl = async (
       }
     }
 
-    // Verifica se URL já existe
     for (const [shortCode, storedUrl] of urlStore.entries()) {
       if (storedUrl === normalizedUrl) {
         const existingShortUrl = `${getBaseUrl(req)}/${shortCode}`;
 
-        // MUDANÇA: Envia via WebSocket em vez de responder via HTTP
         await wsServer.deliverShortUrl(existingShortUrl, normalizedUrl);
 
-        // MUDANÇA CRÍTICA: Não retorna a URL na resposta HTTP
         res.status(200).json({
           success: true,
           message:
